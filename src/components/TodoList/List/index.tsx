@@ -15,7 +15,11 @@ interface ListProps {
   todo: string;
   isCompleted: boolean;
   userId: number;
-  handleIsCompleteTodo: (id: number) => void;
+  handleIsCompleteTodo: (
+    todo: string,
+    id: number,
+    isCompleted: boolean
+  ) => void;
   handleDeleteTodo: (id: number) => void;
   handleUpdateTodo: (todo: string, id: number, isCompleted: boolean) => void;
 }
@@ -31,6 +35,7 @@ function List({
 }: ListProps) {
   const [isModify, setIsModify] = useState(false);
   const [modifyTodoInputValue, setModifyTodoInputValue] = useState(todo);
+  const [tempInputValue, setTempInputValue] = useState(todo);
 
   const handleClickUpdateTodo = (
     todo: string,
@@ -41,6 +46,16 @@ function List({
     handleUpdateTodo(todo, id, isCompleted);
   };
 
+  const handleClickModifyButton = (curTodo: string) => {
+    setIsModify(true);
+    setTempInputValue(curTodo);
+  };
+
+  const handleClickCancelButton = () => {
+    setIsModify(false);
+    setModifyTodoInputValue(tempInputValue);
+  };
+
   const handleChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setModifyTodoInputValue(e.target.value);
   };
@@ -49,7 +64,7 @@ function List({
       <Title
         isCompleted={isCompleted}
         isModify={isModify}
-        onClick={() => handleIsCompleteTodo(id)}
+        onClick={() => handleIsCompleteTodo(todo, id, !isCompleted)}
       >
         <p>{modifyTodoInputValue}</p>
       </Title>
@@ -62,7 +77,7 @@ function List({
 
       <BtnContainer>
         <ModifyBtn
-          onClick={() => setIsModify(true)}
+          onClick={() => handleClickModifyButton(todo)}
           type="button"
           isModify={isModify}
         >
@@ -85,7 +100,7 @@ function List({
           제출
         </UpdateBtn>
         <CloseModifyBtn
-          onClick={() => setIsModify(false)}
+          onClick={handleClickCancelButton}
           type="button"
           isModify={isModify}
         >

@@ -89,7 +89,11 @@ function TodoListContainer() {
     setAddTodoInputValue(e.target.value);
   };
 
-  const handleIsCompleteTodo = (id: number) => {
+  const handleIsCompleteTodo = async (
+    todo: string,
+    id: number,
+    isCompleted: boolean
+  ) => {
     setTodoList((cur) => {
       return cur.map((todo) => {
         if (todo.id === id) {
@@ -102,6 +106,7 @@ function TodoListContainer() {
         }
       });
     });
+    await updateTodoList(todo, id, isCompleted);
   };
   const handleChangeUpdateTodo = (todo: string, id: number) => {
     setTodoList((cur) => {
