@@ -70,7 +70,6 @@ const del = async (endpoint: string) => {
   if (res.status >= 400) {
     alert("요청이 실패 했습니다!");
   }
-  console.log(res);
 };
 
 export { post, get, put, del as delete };
