@@ -1,35 +1,37 @@
 import React, { useState } from "react";
 import {
   BtnContainer,
-  CloseModifyBtn,
+  Button as SubmitBtn,
+  Button as CloseModifyBtn,
   Container,
   DeleteBtn,
   Form,
   ModifyBtn,
   ModifyInput,
   Title,
-  UpdateBtn,
 } from "./index.style";
 
 interface ListProps {
   id: number;
   todo: string;
   isCompleted: boolean;
-  userId: number;
   handleIsCompleteTodo: (
     todo: string,
     id: number,
     isCompleted: boolean
   ) => void;
-  handleDeleteTodo: (id: number) => void;
-  handleUpdateTodo: (todo: string, id: number, isCompleted: boolean) => void;
+  handleDeleteTodo: (id: number, modifyTodoInputValue: string) => void;
+  handleUpdateTodo: (
+    modifyTodoInputValue: string,
+    id: number,
+    isCompleted: boolean
+  ) => void;
 }
 
 function List({
   id,
   todo,
   isCompleted,
-  userId,
   handleIsCompleteTodo,
   handleDeleteTodo,
   handleUpdateTodo,
@@ -38,10 +40,10 @@ function List({
   const [modifyTodoInputValue, setModifyTodoInputValue] = useState(todo);
   const [tempInputValue, setTempInputValue] = useState(todo);
 
-  const handleClickUpdateTodo = (e: React.FormEvent) => {
+  const handleSubmitUpdateTodo = (e: React.FormEvent) => {
     e.preventDefault();
     setIsModify(false);
-    handleUpdateTodo(todo, id, isCompleted);
+    handleUpdateTodo(modifyTodoInputValue, id, isCompleted);
   };
 
   const handleClickModifyButton = (curTodo: string) => {
@@ -59,11 +61,13 @@ function List({
   };
   return (
     <Container>
-      <Form onSubmit={handleClickUpdateTodo}>
+      <Form onSubmit={handleSubmitUpdateTodo}>
         <Title
           isCompleted={isCompleted}
           isModify={isModify}
-          onClick={() => handleIsCompleteTodo(todo, id, !isCompleted)}
+          onClick={() =>
+            !isModify && handleIsCompleteTodo(todo, id, !isCompleted)
+          }
         >
           <p>{modifyTodoInputValue}</p>
 
@@ -87,16 +91,16 @@ function List({
             수정
           </ModifyBtn>
           <DeleteBtn
-            onClick={() => handleDeleteTodo(id)}
+            onClick={() => handleDeleteTodo(id, modifyTodoInputValue)}
             type="button"
             isModify={isModify}
           >
             삭제
           </DeleteBtn>
 
-          <UpdateBtn type="submit" isModify={isModify}>
+          <SubmitBtn type="submit" isModify={isModify}>
             제출
-          </UpdateBtn>
+          </SubmitBtn>
           <CloseModifyBtn
             onClick={handleClickCancelButton}
             type="button"
