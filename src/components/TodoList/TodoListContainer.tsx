@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../api/api";
-import { Response } from "../../common/types/interface";
+import {
+  GetTodosType,
+  PostTodoType,
+  PostTodoValue,
+  TodoValues,
+  UpdateTodoValues,
+} from "../../common/types/todolist";
 import { API_URL } from "../../common/utils/constant";
 import List from "./List";
 import {
@@ -10,25 +16,6 @@ import {
   Title,
   PostForm,
 } from "./TodoListContainer.style";
-
-interface TodoValues {
-  id: number;
-  todo: string;
-  isCompleted: boolean;
-  userId: number;
-}
-
-interface PostTodoValue {
-  todo: string;
-}
-
-interface UpdateTodoValues {
-  todo: string;
-  isCompleted: boolean;
-}
-
-type PostTodoType = TodoValues & Response;
-type GetTodosType = TodoValues[] & Response;
 
 function TodoListContainer() {
   const navigate = useNavigate();

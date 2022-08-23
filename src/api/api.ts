@@ -1,4 +1,4 @@
-import { Response } from "../common/types/interface";
+import { Response } from "../common/types/response";
 
 const baseUrl = String(process.env.REACT_APP_SERVER_URL);
 

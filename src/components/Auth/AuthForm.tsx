@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../common/utils/constant";
-import { Response } from "../../common/types/interface";
+import { Response } from "../../common/types/response";
 import { checkEmail, checkPassword } from "../../common/utils/checkValid";
 import { post } from "../../api/api";
 import { Container } from "./AuthForm.style";
