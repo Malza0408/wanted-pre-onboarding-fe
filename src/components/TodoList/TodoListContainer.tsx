@@ -35,7 +35,7 @@ function TodoListContainer() {
       await postTodoList(addTodoInputValue);
       getTodos();
       clearTodoInput();
-      alert(`TodoList에 ${addTodoInputValue}(이)가 추가 되었습니다.`);
+      alert(`TodoList에 ${addTodoInputValue}(이)가 추가되었습니다.`);
     } catch (e: any) {
       throw new Error(e);
     }
@@ -45,7 +45,7 @@ function TodoListContainer() {
     try {
       await deleteTodoList(id);
       getTodos();
-      alert(`TodoList에서 ${modifyTodoInputValue}(이)가 삭제 되었습니다.`);
+      alert(`TodoList에서 ${modifyTodoInputValue}(이)가 삭제되었습니다.`);
     } catch (e: any) {
       throw new Error(e);
     }
@@ -59,7 +59,7 @@ function TodoListContainer() {
     try {
       await updateTodoList(modifiedTodo, id, isCompleted);
       handleChangeUpdateTodo(modifiedTodo, id);
-      alert(`${modifiedTodo}로 수정되었습니다.`);
+      alert(`${modifiedTodo}(으)로 수정되었습니다.`);
     } catch (e: any) {
       throw new Error(e);
     }
@@ -90,6 +90,11 @@ function TodoListContainer() {
       });
     });
     await updateTodoList(todo, id, isCompleted);
+    if (isCompleted) {
+      alert(`${todo}이(가) 완료 처리되었습니다.`);
+    } else {
+      alert(`${todo}이(가) 미완료 처리되었습니다.`);
+    }
   };
   const handleChangeUpdateTodo = (todo: string, id: number) => {
     setTodoList((cur) => {
