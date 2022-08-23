@@ -27,17 +27,21 @@ function AuthForm({ isLoginPage, handleSetIsLoginPage }: AuthFormProp) {
 
   const postForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLoginPage) {
-      const token = await post<TokenValue, AuthValues>(
-        "/auth/signin",
-        formValues
-      );
+    try {
+      if (isLoginPage) {
+        const token = await post<TokenValue, AuthValues>(
+          "/auth/signin",
+          formValues
+        );
 
-      localStorage.setItem("token", token.access_token);
-      redirectToTodoPage();
-    } else {
-      await post<TokenValue, AuthValues>("/auth/signup", formValues);
-      changeRegisterToLogin();
+        localStorage.setItem("token", token.access_token);
+        redirectToTodoPage();
+      } else {
+        await post<TokenValue, AuthValues>("/auth/signup", formValues);
+        changeRegisterToLogin();
+      }
+    } catch (e: any) {
+      throw new Error(e);
     }
   };
 

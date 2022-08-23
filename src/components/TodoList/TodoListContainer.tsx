@@ -21,20 +21,32 @@ function TodoListContainer() {
   const [addTodoInputValue, setAddTodoInputValue] = useState("");
 
   const getTodos = async () => {
-    const result = await getTodoList();
-    setTodoList(result);
+    try {
+      const result = await getTodoList();
+      setTodoList(result);
+    } catch (e: any) {
+      throw new Error(e);
+    }
   };
 
   const postAndGetTodoList = async (e: React.FormEvent) => {
     e.preventDefault();
-    await postTodoList(addTodoInputValue);
-    getTodos();
-    clearTodoInput();
+    try {
+      await postTodoList(addTodoInputValue);
+      getTodos();
+      clearTodoInput();
+    } catch (e: any) {
+      throw new Error(e);
+    }
   };
 
   const handleDeleteTodo = async (id: number) => {
-    await deleteTodoList(id);
-    getTodos();
+    try {
+      await deleteTodoList(id);
+      getTodos();
+    } catch (e: any) {
+      throw new Error(e);
+    }
   };
 
   const handleUpdateTodo = async (
@@ -42,8 +54,12 @@ function TodoListContainer() {
     id: number,
     isCompleted: boolean
   ) => {
-    await updateTodoList(todo, id, isCompleted);
-    handleChangeUpdateTodo(todo, id);
+    try {
+      await updateTodoList(todo, id, isCompleted);
+      handleChangeUpdateTodo(todo, id);
+    } catch (e: any) {
+      throw new Error(e);
+    }
   };
 
   const clearTodoInput = () => {
@@ -91,7 +107,11 @@ function TodoListContainer() {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
-    getTodos();
+    try {
+      getTodos();
+    } catch (e: any) {
+      throw new Error(e);
+    }
   }, []);
 
   return (
