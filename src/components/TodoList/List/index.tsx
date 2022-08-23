@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   BtnContainer,
   CloseModifyBtn,
   Container,
   DeleteBtn,
+  Form,
   ModifyBtn,
   ModifyInput,
   Title,
@@ -37,11 +38,8 @@ function List({
   const [modifyTodoInputValue, setModifyTodoInputValue] = useState(todo);
   const [tempInputValue, setTempInputValue] = useState(todo);
 
-  const handleClickUpdateTodo = (
-    todo: string,
-    id: number,
-    isCompleted: boolean
-  ) => {
+  const handleClickUpdateTodo = (e: React.FormEvent) => {
+    e.preventDefault();
     setIsModify(false);
     handleUpdateTodo(todo, id, isCompleted);
   };
@@ -61,52 +59,53 @@ function List({
   };
   return (
     <Container>
-      <Title
-        isCompleted={isCompleted}
-        isModify={isModify}
-        onClick={() => handleIsCompleteTodo(todo, id, !isCompleted)}
-      >
-        <p>{modifyTodoInputValue}</p>
-      </Title>
-      <ModifyInput
-        type="text"
-        isModify={isModify}
-        value={modifyTodoInputValue}
-        onChange={handleChangeInputValue}
-      />
+      <Form onSubmit={handleClickUpdateTodo}>
+        <Title
+          isCompleted={isCompleted}
+          isModify={isModify}
+          onClick={() => handleIsCompleteTodo(todo, id, !isCompleted)}
+        >
+          <p>{modifyTodoInputValue}</p>
 
-      <BtnContainer>
-        <ModifyBtn
-          onClick={() => handleClickModifyButton(todo)}
-          type="button"
-          isModify={isModify}
-        >
-          수정
-        </ModifyBtn>
-        <DeleteBtn
-          onClick={() => handleDeleteTodo(id)}
-          type="button"
-          isModify={isModify}
-        >
-          삭제
-        </DeleteBtn>
-        <UpdateBtn
-          onClick={() =>
-            handleClickUpdateTodo(modifyTodoInputValue, id, isCompleted)
-          }
-          type="submit"
-          isModify={isModify}
-        >
-          제출
-        </UpdateBtn>
-        <CloseModifyBtn
-          onClick={handleClickCancelButton}
-          type="button"
-          isModify={isModify}
-        >
-          취소
-        </CloseModifyBtn>
-      </BtnContainer>
+          {isModify && (
+            <ModifyInput
+              type="text"
+              isModify={isModify}
+              value={modifyTodoInputValue}
+              onChange={handleChangeInputValue}
+              placeholder="Todo를 작성해 주세요."
+            />
+          )}
+        </Title>
+
+        <BtnContainer>
+          <ModifyBtn
+            onClick={() => handleClickModifyButton(todo)}
+            type="button"
+            isModify={isModify}
+          >
+            수정
+          </ModifyBtn>
+          <DeleteBtn
+            onClick={() => handleDeleteTodo(id)}
+            type="button"
+            isModify={isModify}
+          >
+            삭제
+          </DeleteBtn>
+
+          <UpdateBtn type="submit" isModify={isModify}>
+            제출
+          </UpdateBtn>
+          <CloseModifyBtn
+            onClick={handleClickCancelButton}
+            type="button"
+            isModify={isModify}
+          >
+            취소
+          </CloseModifyBtn>
+        </BtnContainer>
+      </Form>
     </Container>
   );
 }
