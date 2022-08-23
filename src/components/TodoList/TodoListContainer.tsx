@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import {
-  GetTodosType,
-  PostTodoType,
-  PostTodoValue,
-  TodoValues,
-  UpdateTodoValues,
-} from "../../common/types/todolist";
-import { API_URL } from "../../common/utils/constant";
+import { TodoValues } from "../../common/types/todolist";
 import {
   deleteTodoList,
   getTodoList,

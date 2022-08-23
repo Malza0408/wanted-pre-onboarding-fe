@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../common/utils/constant";
-import { Container, Form, SwitchButton, Title } from "./index.style";
 import AuthForm from "../../components/Auth/AuthForm";
+import { Container, Form, SwitchButton, Title } from "./index.style";
 
 function Main() {
   const navigate = useNavigate();
