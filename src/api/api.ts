@@ -67,8 +67,9 @@ const del = async (endpoint: string) => {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  if (res.status >= 400) {
+  if (!res.ok) {
     alert("요청이 실패 했습니다!");
+    throw new Error(`${res.status.toString()} Error 인한 요청 실패!`);
   }
 };
 
