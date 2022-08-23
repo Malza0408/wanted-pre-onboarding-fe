@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../common/utils/constant";
-import { Response } from "../../common/types/response";
 import { checkEmail, checkPassword } from "../../common/utils/checkValid";
+import { AuthValues, TokenValue } from "../../common/types/auth";
 import { post } from "../../api/api";
 import { Container } from "./AuthForm.style";
 
@@ -10,16 +10,6 @@ interface AuthFormProp {
   isLoginPage: boolean;
   handleSetIsLoginPage: (isLogin: boolean) => void;
 }
-
-interface TokenValue extends Response {
-  access_token: string;
-}
-
-interface AuthValues {
-  email: string;
-  password: string;
-}
-
 function AuthForm({ isLoginPage, handleSetIsLoginPage }: AuthFormProp) {
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState<AuthValues>({
