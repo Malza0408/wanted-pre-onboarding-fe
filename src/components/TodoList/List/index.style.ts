@@ -71,14 +71,3 @@ export const ModifyInput = styled.input<{ isModify: boolean }>`
   width: 85%;
   visibility: ${(props) => (props.isModify ? "visible" : "hidden")};
 `;
-
-export const UpdateBtn = styled(Button)`
-  /* position: absolute;
-  transform: translateX(-60%);
-  visibility: ${(props) => (props.isModify ? "visible" : "hidden")}; */
-`;
-export const CloseModifyBtn = styled(Button)`
-  /* position: absolute;
-  transform: translateX(60%);
-  visibility: ${(props) => (props.isModify ? "visible" : "hidden")}; */
-`;
