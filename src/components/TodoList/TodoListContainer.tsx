@@ -35,28 +35,31 @@ function TodoListContainer() {
       await postTodoList(addTodoInputValue);
       getTodos();
       clearTodoInput();
+      alert(`TodoList에 ${addTodoInputValue}(이)가 추가 되었습니다.`);
     } catch (e: any) {
       throw new Error(e);
     }
   };
 
-  const handleDeleteTodo = async (id: number) => {
+  const handleDeleteTodo = async (id: number, modifyTodoInputValue: string) => {
     try {
       await deleteTodoList(id);
       getTodos();
+      alert(`TodoList에서 ${modifyTodoInputValue}(이)가 삭제 되었습니다.`);
     } catch (e: any) {
       throw new Error(e);
     }
   };
 
   const handleUpdateTodo = async (
-    todo: string,
+    modifiedTodo: string,
     id: number,
     isCompleted: boolean
   ) => {
     try {
-      await updateTodoList(todo, id, isCompleted);
-      handleChangeUpdateTodo(todo, id);
+      await updateTodoList(modifiedTodo, id, isCompleted);
+      handleChangeUpdateTodo(modifiedTodo, id);
+      alert(`${modifiedTodo}로 수정되었습니다.`);
     } catch (e: any) {
       throw new Error(e);
     }
@@ -79,7 +82,7 @@ function TodoListContainer() {
         if (todo.id === id) {
           return {
             ...todo,
-            isCompleted: !todo.isCompleted,
+            isCompleted: isCompleted,
           };
         } else {
           return todo;
