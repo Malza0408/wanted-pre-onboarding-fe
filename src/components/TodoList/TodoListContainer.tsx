@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as api from "../../api/api";
+
 import {
   GetTodosType,
   PostTodoType,
@@ -9,6 +9,12 @@ import {
   UpdateTodoValues,
 } from "../../common/types/todolist";
 import { API_URL } from "../../common/utils/constant";
+import {
+  deleteTodoList,
+  getTodoList,
+  postTodoList,
+  updateTodoList,
+} from "./api";
 import List from "./List";
 import {
   TodoListContainer as OuterContainer,
@@ -22,42 +28,21 @@ function TodoListContainer() {
   const [todoList, setTodoList] = useState<TodoValues[]>([]);
   const [addTodoInputValue, setAddTodoInputValue] = useState("");
 
-  const postTodoList = () => {
-    return api.post<PostTodoType, PostTodoValue>(API_URL.TODO, {
-      todo: addTodoInputValue,
-    });
-  };
-
-  const getTodoList = async () => {
-    const result = await api.get<GetTodosType>(API_URL.TODO);
+  const getTodos = async () => {
+    const result = await getTodoList();
     setTodoList(result);
   };
 
   const postAndGetTodoList = async (e: React.FormEvent) => {
     e.preventDefault();
-    await postTodoList();
-    await getTodoList();
+    await postTodoList(addTodoInputValue);
+    getTodos();
     clearTodoInput();
-  };
-
-  const updateTodoList = async (
-    todo: string,
-    id: number,
-    isCompleted: boolean
-  ) => {
-    await api.put<PostTodoType, UpdateTodoValues>(`${API_URL.TODO}/${id}`, {
-      todo,
-      isCompleted,
-    });
-  };
-
-  const deleteTodoList = (id: number) => {
-    return api.delete(`${API_URL.TODO}/${id}`);
   };
 
   const handleDeleteTodo = async (id: number) => {
     await deleteTodoList(id);
-    await getTodoList();
+    getTodos();
   };
 
   const handleUpdateTodo = async (
@@ -114,9 +99,6 @@ function TodoListContainer() {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
-    const getTodos = async () => {
-      await getTodoList();
-    };
     getTodos();
   }, []);
 
